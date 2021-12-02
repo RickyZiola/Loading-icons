@@ -1,3 +1,4 @@
+
 class Main {
   
   public static void main(String[] args) {
@@ -8,7 +9,11 @@ class Main {
       loading.setType(2);
     }
     for(int i = 0; i < 100; i++){
-       loading.update(i, 100, "Testing: ");
+       if(args.length>1){
+          loading.update(i, 100, args[1]);
+        }else{
+         loading.update(i, 100, "\u001B[31mNO_TEXT_SPECIFIED\u001B[0m ");
+        }
        try{
          Thread.sleep(100);
        }catch(InterruptedException ex){
@@ -52,8 +57,14 @@ class Icon{
      System.out.print("| " + text + (Math.round(progress / total * 100) + 1) + "%");
    }else if(currentType == 1){
      if(created){
-       System.out.print("\b");
+       for(int i = 0; i < 100; i++){
+        System.out.print("\b");
+       }
      }
+     double modFactor = 30 / total;
+      total = total * modFactor;
+      progress = progress * modFactor;
+     System.out.print(text + " " + Math.floor(progress / total * 100) + "% ");
      String[] chars = {"|", "/", "-", "\\", "|", "/", "-", "\\"};
      if(i>7){
        i = 0;
